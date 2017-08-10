@@ -1,9 +1,18 @@
 # EVTC-2-CSV
 
-Export an event chain log's (.evtc) relevant information into a .csv file format.
+### ABOUT
+* Exports an event chain log's (.evtc) relevant information into a .csv file format
+* Used to populate databases with a light load
+
+### USAGE
+* Move the .exe in new folder
+* Move the .evtc files to that new folder
+* Run the .exe
+* Press the any key
+* Wait
+* A single .csv file will be exported to the same directory
 
 ### HEADER INFO
-
 |Name|Type|Description|
 |----|----|-----------|
 |Build|:INTEGER|The game's [build](https://api.guildwars2.com/v2/build) at the time of logging
