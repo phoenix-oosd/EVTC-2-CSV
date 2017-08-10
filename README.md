@@ -32,3 +32,9 @@
 |Resurrect|:INTEGER|The number of times resurrecting an ally
 |Downed|:INTEGER|The number of times downed in a fight
 |Died|:BOOLEAN|1 = Died, 0 = Survived
+
+### TODO
+* Add relevant boons
+* Better file extension detection - currently attempts to parse all files with "evtc"
+* Change "Power" and "Condition" to "P" and "C" to save space, and add "T/H" for tanks and healers respectively
+* Anything else on request
