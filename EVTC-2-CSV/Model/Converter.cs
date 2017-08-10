@@ -43,7 +43,7 @@ namespace EVTC_2_CSV.Model
                 lines.Append(((p.Condition > 5) ? "Condition" : "Power") + ",");
 
                 // DPS
-                lines.Append(Math.Round(p.DamageEvents.Sum(e => e.Damage) / fightDuration * 1000.0, 2) + ","); // DPS
+                lines.Append(Math.Round(p.DamageEvents.Sum(e => e.Damage) / (fightDuration / 1000), 2) + ","); // DPS
 
                 // Boons
                 //lines.Append(Math.Round(p.BoonEvents.Where(b => b.SkillId == (int)Boon.Fury).Sum(b => b.Duration) / fightDuration, 2) + ","); // Fury
