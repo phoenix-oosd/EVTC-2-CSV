@@ -242,9 +242,9 @@ namespace EVTC_2_CSV.Model
                 }
             }
 
-            // Update Events
+            // Species Specific
             NPC target = NPCs.Find(n => n.SpeciesId == Metadata.TargetSpeciesId);
-            if (target.SpeciesId == 16246)
+            if (target.SpeciesId == 16246) // Xera
             {
                 NPC xeraSecond = NPCs.Find(n => n.SpeciesId == 16286);
                 if (xeraSecond != null)
@@ -264,6 +264,16 @@ namespace EVTC_2_CSV.Model
                         {
                             e.SrcMasterInstid = target.Instid;
                         }
+                    }
+                }
+            }
+            if (target.SpeciesId == 17154) // Deimos
+            {
+                foreach (NPC n in NPCs)
+                {
+                    if (n.SpeciesId == 17154)
+                    {
+                        target.LastAware = n.LastAware;
                     }
                 }
             }

@@ -60,19 +60,23 @@ namespace EVTC_2_CSV
                     {
                         failed.Add(logs[i]);
                     }
+                    break;
                 }
                 // Prompt completion and CSV location
+                Console.WriteLine(Environment.NewLine);
                 Console.WriteLine("Done - CSV saved at " + fileName + Environment.NewLine);
 
-                // Prompt failures
-                Console.Clear();
-                Console.WriteLine("Failed to parse " + failed.Count + " file(s)...");
-                Console.WriteLine("Saved file paths in error.log...");
-                using (StreamWriter e = new StreamWriter("errors.log"))
+                // Prompt errors
+                if (failed.Count > 0)
                 {
-                    foreach (string fail in failed)
+                    Console.WriteLine("Failed to parse " + failed.Count + " file(s)...");
+                    Console.WriteLine("Saved file paths in error.log...");
+                    using (StreamWriter e = new StreamWriter("errors.log"))
                     {
-                        e.WriteLine(fail);
+                        foreach (string fail in failed)
+                        {
+                            e.WriteLine(fail);
+                        }
                     }
                 }
             }
