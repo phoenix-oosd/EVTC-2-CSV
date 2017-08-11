@@ -48,11 +48,7 @@ namespace EVTC_2_CSV.Model
                     Skills = new List<Skill>();
                     Events = new List<Event>();
                     ParseMetadata();
-                    if (int.Parse(Metadata.BuildVersion.Substring(4)) < 20170218)
-                    {
-                        return false;
-                    }
-
+                    if (int.Parse(Metadata.BuildVersion.Substring(4)) < 20170218) { return false; }
                     ParseAgents();
                     ParseSkills();
                     ParseEvents();
@@ -60,11 +56,7 @@ namespace EVTC_2_CSV.Model
                     return true;
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
+            catch { return false; }
         }
         #endregion
 

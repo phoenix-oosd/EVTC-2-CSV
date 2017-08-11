@@ -1,5 +1,6 @@
 ﻿using EVTC_2_CSV.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace EVTC_2_CSV
@@ -37,6 +38,9 @@ namespace EVTC_2_CSV
             {
                 // Load all EVTC in CWD
                 string[] logs = Directory.GetFiles("./", "*.evtc*", SearchOption.AllDirectories);
+                List<string> failed = new List<string>();
+
+                // Parse all EVTC
                 for (int i = 0; i < logs.Length; i++)
                 {
                     // Prompt Progress
@@ -52,11 +56,25 @@ namespace EVTC_2_CSV
                         Converter converter = new Converter(_parser);
                         f.Write(converter.CSV());
                     }
+                    else
+                    {
+                        failed.Add(logs[i]);
+                    }
                 }
-
                 // Prompt completion and CSV location
-                Console.Clear();
                 Console.WriteLine("Done - CSV saved at " + fileName + Environment.NewLine);
+
+                // Prompt failures
+                Console.Clear();
+                Console.WriteLine("Failed to parse " + failed.Count + " file(s)...");
+                Console.WriteLine("Saved file paths in error.log...");
+                using (StreamWriter e = new StreamWriter("errors.log"))
+                {
+                    foreach (string fail in failed)
+                    {
+                        e.WriteLine(fail);
+                    }
+                }
             }
         }
     }
