@@ -289,7 +289,15 @@ namespace EVTC_2_CSV.Model
                     }
                 }
             }
-            target.LastAware = Events.Where(e => e.SrcInstid == target.Instid).Last().Time;
+            Event targetDeath = Events.Find(e => e.StateChange == StateChange.ChangeDead && e.SrcInstid == target.Instid);
+            if (targetDeath != null) {
+                target.LastAware = targetDeath.Time;
+                Events = Events.TakeWhile(e => !(e.StateChange == StateChange.ChangeDead && e.SrcInstid == target.Instid)).ToList();
+            }
+            else
+            {
+                target.LastAware = Events.Where(e => e.SrcInstid == target.Instid).Last().Time;
+            }
         }
         #endregion
     }
