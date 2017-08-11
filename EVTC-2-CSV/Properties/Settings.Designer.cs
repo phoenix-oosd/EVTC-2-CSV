@@ -229,13 +229,49 @@ namespace EVTC_2_CSV.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool WriteHeaders {
             get {
                 return ((bool)(this["WriteHeaders"]));
             }
             set {
                 this["WriteHeaders"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WriteARC {
+            get {
+                return ((bool)(this["WriteARC"]));
+            }
+            set {
+                this["WriteARC"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WriteDate {
+            get {
+                return ((bool)(this["WriteDate"]));
+            }
+            set {
+                this["WriteDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WriteSpecies {
+            get {
+                return ((bool)(this["WriteSpecies"]));
+            }
+            set {
+                this["WriteSpecies"] = value;
             }
         }
     }

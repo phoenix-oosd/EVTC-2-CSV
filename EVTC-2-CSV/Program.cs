@@ -1,7 +1,6 @@
 ﻿using EVTC_2_CSV.Model;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Text;
 
@@ -94,9 +93,21 @@ namespace EVTC_2_CSV
             if (Properties.Settings.Default.WriteHeaders)
             {
                 StringBuilder header = new StringBuilder();
+                if (Properties.Settings.Default.WriteARC)
+                {
+                    header.Append("Arc,");
+                }
+                if (Properties.Settings.Default.WriteDate)
+                {
+                    header.Append("Date,");
+                }
                 if (Properties.Settings.Default.WriteBuild)
                 {
                     header.Append("Build,");
+                }
+                if (Properties.Settings.Default.WriteSpecies)
+                {
+                    header.Append("Species,");
                 }
                 if (Properties.Settings.Default.WriteTarget)
                 {

@@ -18,8 +18,8 @@ namespace EVTC_2_CSV.Model
         public int Healing { get; set; }
         public int Condition { get; set; }
         public List<CombatEvent> DamageEvents { get; set; } = new List<CombatEvent>();
-        public List<StateEvent> StateEvents { get; set; } = new List<StateEvent>();
         public List<BoonEvent> BoonEvents { get; set; } = new List<BoonEvent>();
+        public List<StateEvent> StateEvents { get; set; } = new List<StateEvent>();
         #endregion
 
         #region Constructor
@@ -27,22 +27,22 @@ namespace EVTC_2_CSV.Model
         {
             string[] splitName = agentName.Split('\0');
             Character = splitName[0];
-            Account = splitName[1] ?? "N/A";
-            Group = splitName[2] ?? "N/A";
+            Account = splitName[1] ?? ":?.????";
+            Group = splitName[2] ?? "?";
         }
         #endregion
 
         #region Public Methods
         public void LoadEvents(NPC target, List<Event> events)
         {
-            SetDamageEvents(target, events);
-            SetStateEvents(events);
+            SetDamageEvents(events, target);
             SetBoonEvents(events);
+            SetStateEvents(events);
         }
         #endregion
 
         #region Private Methods
-        private void SetDamageEvents(NPC target, List<Event> events)
+        private void SetDamageEvents(List<Event> events, NPC target)
         {
             foreach (Event e in events)
             {
@@ -66,7 +66,7 @@ namespace EVTC_2_CSV.Model
                                     IsFlanking = e.IsFlanking
                                 });
                             }
-                            else if (e.IsBuff == false && e.Value != 0)
+                            else if (!e.IsBuff && e.Value != 0)
                             {
                                 DamageEvents.Add(new CombatEvent()
                                 {
@@ -86,39 +86,33 @@ namespace EVTC_2_CSV.Model
             }
         }
 
-        private void SetStateEvents(List<Event> events)
-        {
-            foreach (Event e in events)
-            {
-                if (e.SrcInstid == Instid)
-                {
-                    if (e.StateChange != StateChange.None)
-                    {
-                        StateEvents.Add(new StateEvent()
-                        {
-                            Time = e.Time,
-                            State = e.StateChange
-                        });
-                    }
-                }
-            }
-        }
-
         private void SetBoonEvents(List<Event> events)
         {
             foreach (Event e in events)
             {
-                if (e.DstInstid == Instid)
+                if (e.DstInstid == Instid && Enum.IsDefined(typeof(Boon), e.SkillId))
                 {
-                    if (Enum.IsDefined(typeof(Boon), e.SkillId))
+                    BoonEvents.Add(new BoonEvent()
                     {
-                        BoonEvents.Add(new BoonEvent()
-                        {
-                            Time = e.Time,
-                            Duration = e.Value - e.OverstackValue,
-                            SkillId = e.SkillId
-                        });
-                    }
+                        Time = e.Time,
+                        Duration = e.Value - e.OverstackValue,
+                        SkillId = e.SkillId
+                    });
+                }
+            }
+        }
+
+        private void SetStateEvents(List<Event> events)
+        {
+            foreach (Event e in events)
+            {
+                if (e.StateChange != StateChange.None && e.SrcInstid == Instid)
+                {
+                    StateEvents.Add(new StateEvent()
+                    {
+                        Time = e.Time,
+                        State = e.StateChange
+                    });
                 }
             }
         }

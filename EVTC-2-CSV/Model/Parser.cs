@@ -48,7 +48,7 @@ namespace EVTC_2_CSV.Model
                     Skills = new List<Skill>();
                     Events = new List<Event>();
                     ParseMetadata();
-                    if (int.Parse(Metadata.BuildVersion.Substring(4)) < 20170218) { return false; }
+                    if (int.Parse(Metadata.ARCVersion.Substring(4)) < 20170218) { return false; }
                     ParseAgents();
                     ParseSkills();
                     ParseEvents();
@@ -63,7 +63,7 @@ namespace EVTC_2_CSV.Model
         #region Private Methods
         private void ParseMetadata()
         {
-            Metadata.BuildVersion = _reader.ReadUTF8(12); // 12 bytes: build version 
+            Metadata.ARCVersion = _reader.ReadUTF8(12); // 12 bytes: build version 
             Metadata.TargetSpeciesId = _reader.Skip(1).ReadUInt16(); // 2 bytes: instid
         }
 
@@ -131,6 +131,25 @@ namespace EVTC_2_CSV.Model
             }
         }
 
+        private Profession ParseProfession(int profLower, int profUpper, int isElite)
+        {
+            if (isElite == -1)
+            {
+                if (profUpper == 65535)
+                {
+                    return Profession.Gadget;
+                }
+                else
+                {
+                    return Profession.NPC;
+                }
+            }
+            else
+            {
+                return (Profession)profLower + (9 * isElite);
+            }
+        }
+
         private void AddAgent()
         {
             string address = _reader.ReadUInt64Hex(); // 8 bytes: address
@@ -184,72 +203,75 @@ namespace EVTC_2_CSV.Model
             int timeStart = Events.First().Time;
             Events.ForEach(e => e.Time -= timeStart);
 
-            // Update Players
+            // Update Instid
             foreach (Player p in Players)
             {
-                bool assignedFirst = false;
                 foreach (Event e in Events)
                 {
                     if (p.Address == e.SrcAgent && e.SrcInstid != 0)
                     {
-                        if (!assignedFirst)
-                        {
-                            p.Instid = e.SrcInstid;
-                            p.FirstAware = e.Time;
-                            assignedFirst = true;
-                        }
-                        p.LastAware = e.Time;
+                        p.Instid = e.SrcInstid;
                     }
                     else if (p.Address == e.DstAgent && e.DstInstid != 0)
                     {
-                        if (!assignedFirst)
-                        {
-                            p.Instid = e.DstInstid;
-                            p.FirstAware = e.Time;
-                            assignedFirst = true;
-                        }
-                        p.LastAware = e.Time;
+                        p.Instid = e.DstInstid;
                     }
                 }
             }
-
-            // Update NPCs
             foreach (NPC n in NPCs)
             {
-                bool assignedFirst = false;
                 foreach (Event e in Events)
                 {
                     if (n.Address == e.SrcAgent && e.SrcInstid != 0)
                     {
-                        if (!assignedFirst)
-                        {
-                            n.Instid = e.SrcInstid;
-                            n.FirstAware = e.Time;
-                            assignedFirst = true;
-                        }
-                        n.LastAware = e.Time;
+                        n.Instid = e.SrcInstid;
                     }
                     else if (n.Address == e.DstAgent && e.DstInstid != 0)
                     {
-                        if (!assignedFirst)
-                        {
-                            n.Instid = e.DstInstid;
-                            n.FirstAware = e.Time;
-                            assignedFirst = true;
-                        }
-                        n.LastAware = e.Time;
+
+                        n.Instid = e.DstInstid;
                     }
                 }
             }
 
-            // Species Specific
+            // Update Metadata
+            IEnumerable<Event> stateChanges = Events.Where(e => e.StateChange != StateChange.None);
+            foreach (Event e in stateChanges)
+            {
+                StateChange stateChange = e.StateChange;
+                if (stateChange == StateChange.LogStart)
+                {
+                    Metadata.LogStart = DateTimeOffset.FromUnixTimeSeconds(e.Value).DateTime;
+                }
+                else if (stateChange == StateChange.LogEnd)
+                {
+                    Metadata.LogEnd = DateTimeOffset.FromUnixTimeSeconds(e.Value).DateTime;
+                }
+                else if (stateChange == StateChange.PointOfView)
+                {
+                    Metadata.PointOfView = (Players.Find(p => p.Address == e.SrcAgent) != null) ? Players.Find(p => p.Address == e.SrcAgent).Account : ":?.????";
+                }
+                else if (stateChange == StateChange.Language)
+                {
+                    Metadata.Language = (Language)e.Value;
+                }
+                else if (stateChange == StateChange.GWBuild)
+                {
+                    Metadata.GWBuild = int.Parse(e.SrcAgent, NumberStyles.HexNumber);
+                }
+                else if (stateChange == StateChange.ShardID)
+                {
+                    Metadata.ShardID = int.Parse(e.SrcAgent, NumberStyles.HexNumber);
+                }
+            }
+
+            // Target
             NPC target = NPCs.Find(n => n.SpeciesId == Metadata.TargetSpeciesId);
-            if (target.SpeciesId == 16246) // Xera
+            if (target.SpeciesId == 16246)
             {
                 NPC xeraSecond = NPCs.Find(n => n.SpeciesId == 16286);
                 if (xeraSecond != null)
                 {
-                    target.LastAware = xeraSecond.LastAware;
                     foreach (Event e in Events)
                     {
                         if (e.SrcInstid == xeraSecond.Instid)
@@ -267,70 +289,7 @@ namespace EVTC_2_CSV.Model
                     }
                 }
             }
-            if (target.SpeciesId == 17154) // Deimos
-            {
-                foreach (NPC n in NPCs)
-                {
-                    if (n.SpeciesId == 17154)
-                    {
-                        target.LastAware = n.LastAware;
-                    }
-                }
-            }
-
-            // Update Metadata
-            var stateChanges = Events.Where(e => e.StateChange != StateChange.None);
-            foreach (Event e in stateChanges)
-            {
-                StateChange stateChange = e.StateChange;
-                if (stateChange == StateChange.LogStart)
-                {
-                    Metadata.LogStart = DateTimeOffset.FromUnixTimeSeconds(e.Value).DateTime;
-                }
-                else if (stateChange == StateChange.LogEnd)
-                {
-                    Metadata.LogEnd = DateTimeOffset.FromUnixTimeSeconds(e.Value).DateTime;
-                }
-                else if (stateChange == StateChange.PointOfView)
-                {
-                    Metadata.PointOfView = (Players.Find(p => p.Address == e.SrcAgent) != null) ? Players.Find(p => p.Address == e.SrcAgent).Account : "N/A";
-                }
-                else if (stateChange == StateChange.Language)
-                {
-                    Metadata.Language = (Language)e.Value;
-                }
-                else if (stateChange == StateChange.GWBuild)
-                {
-                    Metadata.GWBuild = int.Parse(e.SrcAgent, NumberStyles.HexNumber);
-                }
-                else if (stateChange == StateChange.ShardID)
-                {
-                    Metadata.ShardID = int.Parse(e.SrcAgent, NumberStyles.HexNumber);
-                }
-                else if (stateChange == StateChange.Despawn && e.SrcAgent == target.Address)
-                {
-                    Metadata.IsSuccess = true;
-                }
-            }
-        }
-
-        private Profession ParseProfession(int profLower, int profUpper, int isElite)
-        {
-            if (isElite == -1)
-            {
-                if (profUpper == 65535)
-                {
-                    return Profession.Gadget;
-                }
-                else
-                {
-                    return Profession.NPC;
-                }
-            }
-            else
-            {
-                return (Profession)profLower + (9 * isElite);
-            }
+            target.LastAware = Events.Where(e => e.SrcInstid == target.Instid).Last().Time;
         }
         #endregion
     }
