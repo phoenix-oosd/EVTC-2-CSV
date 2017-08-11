@@ -38,6 +38,17 @@
 |Downed|:INTEGER|Number of times the character downs
 |Died|:BOOLEAN|Whether the character died during the encounter
 
+### CONFIG INFO
+* Headers are written in the order of the default configuration file
+* Change value between <value></value> to "True" to include the header
+* Change value between <value></value> to "True" to exclude the header
+
+|Name|Description|
+|----|-----------|
+WriteHeaders|Writes the names of the fields into the first row of the .csv file (default is "False")
+Write[x]|Writes [x] field into each row
+
+
 ### TODO
 * Add relevant boons
 * Anything else on request
