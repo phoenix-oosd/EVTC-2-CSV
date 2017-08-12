@@ -1,0 +1,121 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace EVTC_2_CSV.Model
+{
+    public class Player : IAgent
+    {
+        #region Properties
+        public string Address { get; set; }
+        public int FirstAware { get; set; }
+        public int LastAware { get; set; }
+        public int Instid { get; set; }
+        public Profession Profession { get; set; }
+        public string Character { get; set; }
+        public string Account { get; set; }
+        public string Group { get; set; }
+        public int Toughness { get; set; }
+        public int Healing { get; set; }
+        public int Condition { get; set; }
+        public List<CombatEvent> DamageEvents { get; set; } = new List<CombatEvent>();
+        public List<BoonEvent> BoonEvents { get; set; } = new List<BoonEvent>();
+        public List<StateEvent> StateEvents { get; set; } = new List<StateEvent>();
+        #endregion
+
+        #region Constructor
+        public Player(string agentName)
+        {
+            string[] splitName = agentName.Split('\0');
+            Character = splitName[0];
+            Account = splitName[1] ?? ":?.????";
+            Group = splitName[2] ?? "?";
+        }
+        #endregion
+
+        #region Public Methods
+        public void LoadEvents(NPC target, List<Event> events)
+        {
+            SetDamageEvents(events, target);
+            SetBoonEvents(events);
+            SetStateEvents(events);
+        }
+        #endregion
+
+        #region Private Methods
+        private void SetDamageEvents(List<Event> events, NPC target)
+        {
+            foreach (Event e in events)
+            {
+                if (e.SrcInstid == Instid || e.SrcMasterInstid == Instid)
+                {
+                    if (e.DstInstid == target.Instid && e.IFF == IFF.Foe)
+                    {
+                        if (e.StateChange == StateChange.None)
+                        {
+                            if (e.IsBuff && e.BuffDmg != 0)
+                            {
+                                DamageEvents.Add(new CombatEvent()
+                                {
+                                    Time = e.Time,
+                                    Damage = e.BuffDmg,
+                                    SkillId = e.SkillId,
+                                    IsBuff = e.IsBuff,
+                                    Result = e.Result,
+                                    IsNinety = e.IsNinety,
+                                    IsMoving = e.IsMoving,
+                                    IsFlanking = e.IsFlanking
+                                });
+                            }
+                            else if (!e.IsBuff && e.Value != 0)
+                            {
+                                DamageEvents.Add(new CombatEvent()
+                                {
+                                    Time = e.Time,
+                                    Damage = e.Value,
+                                    SkillId = e.SkillId,
+                                    IsBuff = e.IsBuff,
+                                    Result = e.Result,
+                                    IsNinety = e.IsNinety,
+                                    IsMoving = e.IsMoving,
+                                    IsFlanking = e.IsFlanking
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SetBoonEvents(List<Event> events)
+        {
+            foreach (Event e in events)
+            {
+                if (e.DstInstid == Instid && Enum.IsDefined(typeof(Boon), e.SkillId))
+                {
+                    BoonEvents.Add(new BoonEvent()
+                    {
+                        Time = e.Time,
+                        Duration = e.Value - e.OverstackValue,
+                        SkillId = e.SkillId
+                    });
+                }
+            }
+        }
+
+        private void SetStateEvents(List<Event> events)
+        {
+            foreach (Event e in events)
+            {
+                if (e.StateChange != StateChange.None && e.SrcInstid == Instid)
+                {
+                    StateEvents.Add(new StateEvent()
+                    {
+                        Time = e.Time,
+                        State = e.StateChange
+                    });
+                }
+            }
+        }
+        #endregion
+    }
+}

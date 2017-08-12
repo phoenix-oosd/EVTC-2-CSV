@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{879E81F5-4639-4878-AE63-16378392CFBB}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>EVTC_2_CSV</RootNamespace>
+    <AssemblyName>EVTC-2-CSV</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Data\Parser\Agent\Gadget.cs" />
+    <Compile Include="Model\Data\Parser\Agent\IAgent.cs" />
+    <Compile Include="Model\Data\Parser\Agent\NPC.cs" />
+    <Compile Include="Model\Data\Parser\Agent\Player.cs" />
+    <Compile Include="Model\Data\Parser\Event\BoonEvent.cs" />
+    <Compile Include="Model\Data\Parser\Event\CombatEvent.cs" />
+    <Compile Include="Model\Data\Parser\Event\Event.cs" />
+    <Compile Include="Model\Data\Parser\Event\StateEvent.cs" />
+    <Compile Include="Model\Data\Parser\Metadata.cs" />
+    <Compile Include="Model\Data\Parser\Skill.cs" />
+    <Compile Include="Model\Enums\Boon.cs" />
+    <Compile Include="Model\Enums\Activation.cs" />
+    <Compile Include="Model\Enums\BuffRemove.cs" />
+    <Compile Include="Model\Enums\CustomSkill.cs" />
+    <Compile Include="Model\Enums\IFF.cs" />
+    <Compile Include="Model\Enums\Language.cs" />
+    <Compile Include="Model\Enums\Profession.cs" />
+    <Compile Include="Model\Enums\Result.cs" />
+    <Compile Include="Model\Enums\StateChange.cs" />
+    <Compile Include="Model\Extensions\BinaryReaderExtensions.cs" />
+    <Compile Include="Model\Parser.cs" />
+    <Compile Include="Model\Converter.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
