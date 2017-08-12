@@ -122,11 +122,12 @@ namespace EVTC_2_CSV.Model
                     IsFifty = _reader.ReadBoolean(), // 1 byte: IsFifty
                     IsMoving = _reader.ReadBoolean(), // 1 byte: IsMoving
                     StateChange = (StateChange)_reader.Read(), // 1 byte: StateChange
-                    IsFlanking = _reader.ReadBoolean() // 1 byte: IsFlanking
+                    IsFlanking = _reader.ReadBoolean(), // 1 byte: IsFlanking
+                    IsShield = _reader.ReadBoolean() // 1 byte: IsShield
                 };
 
                 // Add Combat
-                _reader.Skip(3);
+                _reader.Skip(2);
                 Events.Add(combat);
             }
         }

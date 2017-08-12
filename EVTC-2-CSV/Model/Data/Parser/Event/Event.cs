@@ -23,6 +23,7 @@
         public bool IsMoving { get; set; }
         public StateChange StateChange { get; set; }
         public bool IsFlanking { get; set; }
+        public bool IsShield { get; set; }
         #endregion
     }
 }

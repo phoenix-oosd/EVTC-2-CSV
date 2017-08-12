@@ -25,253 +25,253 @@ namespace EVTC_2_CSV.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteBuild {
-            get {
-                return ((bool)(this["WriteBuild"]));
-            }
-            set {
-                this["WriteBuild"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteTarget {
-            get {
-                return ((bool)(this["WriteTarget"]));
-            }
-            set {
-                this["WriteTarget"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteTime {
-            get {
-                return ((bool)(this["WriteTime"]));
-            }
-            set {
-                this["WriteTime"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteAccount {
-            get {
-                return ((bool)(this["WriteAccount"]));
-            }
-            set {
-                this["WriteAccount"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteCharacter {
-            get {
-                return ((bool)(this["WriteCharacter"]));
-            }
-            set {
-                this["WriteCharacter"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteProfession {
-            get {
-                return ((bool)(this["WriteProfession"]));
-            }
-            set {
-                this["WriteProfession"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteGear {
-            get {
-                return ((bool)(this["WriteGear"]));
-            }
-            set {
-                this["WriteGear"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteDPS {
-            get {
-                return ((bool)(this["WriteDPS"]));
-            }
-            set {
-                this["WriteDPS"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteCritical {
-            get {
-                return ((bool)(this["WriteCritical"]));
-            }
-            set {
-                this["WriteCritical"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteScholar {
-            get {
-                return ((bool)(this["WriteScholar"]));
-            }
-            set {
-                this["WriteScholar"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteFlank {
-            get {
-                return ((bool)(this["WriteFlank"]));
-            }
-            set {
-                this["WriteFlank"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteMoving {
-            get {
-                return ((bool)(this["WriteMoving"]));
-            }
-            set {
-                this["WriteMoving"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteDodge {
-            get {
-                return ((bool)(this["WriteDodge"]));
-            }
-            set {
-                this["WriteDodge"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteSwap {
-            get {
-                return ((bool)(this["WriteSwap"]));
-            }
-            set {
-                this["WriteSwap"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteResurrect {
-            get {
-                return ((bool)(this["WriteResurrect"]));
-            }
-            set {
-                this["WriteResurrect"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteDowned {
-            get {
-                return ((bool)(this["WriteDowned"]));
-            }
-            set {
-                this["WriteDowned"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteDied {
-            get {
-                return ((bool)(this["WriteDied"]));
-            }
-            set {
-                this["WriteDied"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool WriteHeaders {
+        public bool WriteHeader {
             get {
-                return ((bool)(this["WriteHeaders"]));
+                return ((bool)(this["WriteHeader"]));
             }
             set {
-                this["WriteHeaders"] = value;
+                this["WriteHeader"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteARC {
+        public bool Arc {
             get {
-                return ((bool)(this["WriteARC"]));
+                return ((bool)(this["Arc"]));
             }
             set {
-                this["WriteARC"] = value;
+                this["Arc"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteDate {
+        public bool Date {
             get {
-                return ((bool)(this["WriteDate"]));
+                return ((bool)(this["Date"]));
             }
             set {
-                this["WriteDate"] = value;
+                this["Date"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WriteSpecies {
+        public bool Build {
             get {
-                return ((bool)(this["WriteSpecies"]));
+                return ((bool)(this["Build"]));
             }
             set {
-                this["WriteSpecies"] = value;
+                this["Build"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Species {
+            get {
+                return ((bool)(this["Species"]));
+            }
+            set {
+                this["Species"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Target {
+            get {
+                return ((bool)(this["Target"]));
+            }
+            set {
+                this["Target"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Time {
+            get {
+                return ((bool)(this["Time"]));
+            }
+            set {
+                this["Time"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Account {
+            get {
+                return ((bool)(this["Account"]));
+            }
+            set {
+                this["Account"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Character {
+            get {
+                return ((bool)(this["Character"]));
+            }
+            set {
+                this["Character"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Profession {
+            get {
+                return ((bool)(this["Profession"]));
+            }
+            set {
+                this["Profession"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Gear {
+            get {
+                return ((bool)(this["Gear"]));
+            }
+            set {
+                this["Gear"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DPS {
+            get {
+                return ((bool)(this["DPS"]));
+            }
+            set {
+                this["DPS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Critical {
+            get {
+                return ((bool)(this["Critical"]));
+            }
+            set {
+                this["Critical"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Scholar {
+            get {
+                return ((bool)(this["Scholar"]));
+            }
+            set {
+                this["Scholar"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Flank {
+            get {
+                return ((bool)(this["Flank"]));
+            }
+            set {
+                this["Flank"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Moving {
+            get {
+                return ((bool)(this["Moving"]));
+            }
+            set {
+                this["Moving"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Dodge {
+            get {
+                return ((bool)(this["Dodge"]));
+            }
+            set {
+                this["Dodge"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Swap {
+            get {
+                return ((bool)(this["Swap"]));
+            }
+            set {
+                this["Swap"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Resurrect {
+            get {
+                return ((bool)(this["Resurrect"]));
+            }
+            set {
+                this["Resurrect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Downed {
+            get {
+                return ((bool)(this["Downed"]));
+            }
+            set {
+                this["Downed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Died {
+            get {
+                return ((bool)(this["Died"]));
+            }
+            set {
+                this["Died"] = value;
             }
         }
     }

@@ -22,7 +22,7 @@ namespace EVTC_2_CSV.Model
         #endregion
 
         #region Public Methods
-        public String CSV()
+        public String ToCSV()
         {
             StringBuilder lines = new StringBuilder();
             foreach (Player p in _parser.Players)
@@ -44,56 +44,56 @@ namespace EVTC_2_CSV.Model
         #region Private Methods
         private void ConvertMetadata(StringBuilder lines)
         {
-            if (Properties.Settings.Default.WriteARC)
+            if (Properties.Settings.Default.Resurrect)
             {
                 lines.Append(_parser.Metadata.ARCVersion + ",");
             }
-            if (Properties.Settings.Default.WriteDate)
+            if (Properties.Settings.Default.Downed)
             {
                 lines.Append(_parser.Metadata.LogStart.ToString("yyyy-MM-dd,"));
             }
-            if (Properties.Settings.Default.WriteBuild)
+            if (Properties.Settings.Default.WriteHeader)
             {
                 lines.Append(_parser.Metadata.GWBuild + ",");
             }
         }
         private void ConvertTarget(StringBuilder lines)
         {
-            if (Properties.Settings.Default.WriteSpecies)
+            if (Properties.Settings.Default.Died)
             {
                 lines.Append(_target.SpeciesId + ",");
             }
-            if (Properties.Settings.Default.WriteTarget)
+            if (Properties.Settings.Default.Arc)
             {
                 lines.Append(_target.Name + ",");
             }
-            if (Properties.Settings.Default.WriteTime)
+            if (Properties.Settings.Default.Date)
             {
                 lines.Append(_fightDuration / 1000.0 + ",");
             }
         }
         private void ConvertGroup(StringBuilder lines, Player p)
         {
-            if (Properties.Settings.Default.WriteAccount)
+            if (Properties.Settings.Default.Build)
             {
                 lines.Append(p.Account + ",");
             }
-            if (Properties.Settings.Default.WriteCharacter)
+            if (Properties.Settings.Default.Species)
             {
                 lines.Append(p.Character + ",");
             }
-            if (Properties.Settings.Default.WriteProfession)
+            if (Properties.Settings.Default.Target)
             {
                 lines.Append(p.Profession + ",");
             }
-            if (Properties.Settings.Default.WriteGear)
+            if (Properties.Settings.Default.Time)
             {
                 lines.Append(((p.Condition > 5) ? "Condition," : "Power,"));
             }
         }
         private void ConvertDamage(StringBuilder lines, Player p)
         {
-            if (Properties.Settings.Default.WriteDPS)
+            if (Properties.Settings.Default.Account)
             {
                 lines.Append(Math.Round(p.DamageEvents.Sum(e => e.Damage) / (_fightDuration / 1000), 2) + ","); // DPS
             }
@@ -108,39 +108,39 @@ namespace EVTC_2_CSV.Model
         {
             float n = p.DamageEvents.Where(e => e.IsBuff == false).Count();
             if (n == 0) { n = 1; }
-            if (Properties.Settings.Default.WriteCritical)
+            if (Properties.Settings.Default.Character)
             {
                 lines.Append(Math.Round(p.DamageEvents.Where(e => !e.IsBuff && e.Result == Result.Critical).Count() / n, 2) + ","); //  Critical Rate
             }
-            if (Properties.Settings.Default.WriteScholar)
+            if (Properties.Settings.Default.Profession)
             {
                 lines.Append(Math.Round(p.DamageEvents.Where(e => !e.IsBuff && e.IsNinety).Count() / n, 2) + ","); //  Scholar Rate
             }
-            if (Properties.Settings.Default.WriteFlank)
+            if (Properties.Settings.Default.Gear)
             {
                 lines.Append(Math.Round(p.DamageEvents.Where(e => !e.IsBuff && e.IsFlanking).Count() / n, 2) + ","); //  Flanking Rate
             }
-            if (Properties.Settings.Default.WriteMoving)
+            if (Properties.Settings.Default.DPS)
             {
                 lines.Append(Math.Round(p.DamageEvents.Where(e => !e.IsBuff && e.IsMoving).Count() / n, 2) + ","); //  Moving Rate
             }
-            if (Properties.Settings.Default.WriteDodge)
+            if (Properties.Settings.Default.Critical)
             {
                 lines.Append(_parser.Events.Where(e => e.SrcInstid == p.Instid && e.SkillId == (int)CustomSkill.Dodge).Count() + ","); // Dodge Count
             }
-            if (Properties.Settings.Default.WriteSwap)
+            if (Properties.Settings.Default.Scholar)
             {
                 lines.Append(p.StateEvents.Where(s => s.State == StateChange.WeaponSwap).Count() + ","); // Weapon Swap Count
             }
-            if (Properties.Settings.Default.WriteResurrect)
+            if (Properties.Settings.Default.Flank)
             {
                 lines.Append(_parser.Events.Where(e => e.SrcInstid == p.Instid && e.SkillId == (int)CustomSkill.Resurrect).Count() + ","); // Resurrect Count
             }
-            if (Properties.Settings.Default.WriteDowned)
+            if (Properties.Settings.Default.Moving)
             {
                 lines.Append(p.StateEvents.Where(s => s.State == StateChange.ChangeDown).Count() + ","); // Downed Count
             }
-            if (Properties.Settings.Default.WriteDied)
+            if (Properties.Settings.Default.Dodge)
             {
                 lines.Append(p.StateEvents.Where(s => s.State == StateChange.ChangeDead).Count() + ","); // Died
             }

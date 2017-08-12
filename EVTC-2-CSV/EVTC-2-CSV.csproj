@@ -58,6 +58,7 @@
     <Compile Include="Model\Enums\Activation.cs" />
     <Compile Include="Model\Enums\BuffRemove.cs" />
     <Compile Include="Model\Enums\CustomSkill.cs" />
+    <Compile Include="Model\Enums\Field.cs" />
     <Compile Include="Model\Enums\IFF.cs" />
     <Compile Include="Model\Enums\Language.cs" />
     <Compile Include="Model\Enums\Profession.cs" />
