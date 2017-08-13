@@ -6,7 +6,15 @@ namespace EVTC_2_CSV.Model
     {
         #region Members
         protected readonly int _capacity;
-        protected List<int> _boonStack = new List<int>();
+        protected List<int> _stack = new List<int>();
+        #endregion
+
+        #region Properties
+        public List<int> Stack
+        {
+            get { return _stack; }
+            set { _stack = value; }
+        }
         #endregion
 
         #region Constructor
@@ -26,16 +34,16 @@ namespace EVTC_2_CSV.Model
         {
             if (IsFull())
             {
-                int i = _boonStack.Count - 1;
-                if (_boonStack[i] < duration)
+                int i = _stack.Count - 1;
+                if (_stack[i] < duration)
                 {
-                    _boonStack[i] = duration;
+                    _stack[i] = duration;
                     ReverseSort();
                 }
             }
             else
             {
-                _boonStack.Add(duration);
+                _stack.Add(duration);
                 ReverseSort();
             }
         }
@@ -44,13 +52,13 @@ namespace EVTC_2_CSV.Model
         #region Protected Methods
         protected bool IsFull()
         {
-            return _boonStack.Count >= _capacity;
+            return _stack.Count >= _capacity;
         }
 
         protected void ReverseSort()
         {
-            _boonStack.Sort();
-            _boonStack.Reverse();
+            _stack.Sort();
+            _stack.Reverse();
         }
         #endregion
     }

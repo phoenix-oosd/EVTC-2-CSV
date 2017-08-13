@@ -12,24 +12,24 @@ namespace EVTC_2_CSV.Model
         #region Abstract Methods
         public override int CalculateValue()
         {
-            return _boonStack.Sum();
+            return _stack.Sum();
         }
 
         public override void Update(int timePassed)
         {
-            if (_boonStack.Count > 0)
+            if (_stack.Count > 0)
             {
                 if (timePassed >= CalculateValue())
                 {
-                    _boonStack.Clear();
+                    _stack.Clear();
                 }
                 else
                 {
-                    _boonStack[0] -= timePassed;
-                    if (_boonStack[0] < 0)
+                    _stack[0] -= timePassed;
+                    if (_stack[0] < 0)
                     {
-                        timePassed = _boonStack[0];
-                        _boonStack.RemoveAt(0);
+                        timePassed = _stack[0];
+                        _stack.RemoveAt(0);
                         Update(Math.Abs(timePassed));
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -115,10 +116,10 @@ namespace EVTC_2_CSV.Model
                 {
                     sb.Append(Math.Round(BoonDurationRates(b, be[b.SkillId]), 2) + ","); // Duration Boon Rates
                 }
-                //else
-                //{
-                //    lines.Append(Math.Round(BoonIntensityStacks(b, boonEvents[b.SkillId]), 2) + ","); // Duration Boon Stacks
-                //}
+                else
+                {
+                    sb.Append(Math.Round(BoonIntensityStacks(b, be[b.SkillId]), 2) + ","); // Duration Boon Stacks
+                }
             }
         }
 
@@ -214,6 +215,48 @@ namespace EVTC_2_CSV.Model
             }
             return duration / _time;
         }
+
+        private double BoonIntensityStacks(Boon b, List<BoonEvent> boonEvents)
+        {
+            if (boonEvents.Count == 0) { return 0.0; }
+            int prev = 0;
+            int curr = 0;
+            List<int> s = new List<int> { 0 };
+
+            BoonStackIntensity bs = new BoonStackIntensity(b.Capacity);
+            foreach (BoonEvent be in boonEvents)
+            {
+                curr = be.Time;
+                bs.SimulateTimePassed(curr - prev, s);
+                bs.Update(curr - prev);
+                bs.Add(be.Duration);
+                if (prev != curr)
+                {
+                    s.Add(bs.CalculateValue());
+                }
+                else
+                {
+                    s[s.Count - 1] = bs.CalculateValue();
+                }
+                prev = curr;
+            }
+            bs.SimulateTimePassed(_time - prev, s);
+            bs.Update(1);
+            s.Add(bs.CalculateValue());
+            //Console.WriteLine();
+            //Console.WriteLine(s.Sum() + "|" +_time);
+            //using (StreamWriter f = new StreamWriter("stacks.txt"))
+            //{
+            //    foreach (int k in s)
+            //    {
+            //        f.WriteLine(k.ToString());
+            //    }
+            //}
+            //Console.Read();
+
+            return s.Average();
+        }
+
         #endregion
     }
 }

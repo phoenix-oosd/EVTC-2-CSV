@@ -36,8 +36,8 @@ namespace EVTC_2_CSV.Model
         public void LoadEvents(NPC target, List<Event> events)
         {
             SetDamageEvents(events, target);
-            SetBoonEvents(events);
-            SetStateEvents(events);
+            SetBoonEvents(events, target);
+            SetStateChangeEvents(events);
         }
         #endregion
 
@@ -86,16 +86,16 @@ namespace EVTC_2_CSV.Model
             }
         }
 
-        private void SetBoonEvents(List<Event> events)
+        private void SetBoonEvents(List<Event> events, NPC target)
         {
             foreach (Boon b in Boon.Values)
             {
                 BoonEvents.Add(b.SkillId, new List<BoonEvent>());
             }
-
+            int time = target.LastAware - target.FirstAware;
             foreach (Event e in events)
             {
-                if (e.DstInstid == Instid && BoonEvents.ContainsKey(e.SkillId))
+                if (e.DstInstid == Instid && BoonEvents.ContainsKey(e.SkillId) && e.Time < time)
                 {
                     BoonEvents[e.SkillId].Add(new BoonEvent()
                     {
@@ -104,9 +104,12 @@ namespace EVTC_2_CSV.Model
                     });
                 }
             }
+            //Console.WriteLine();
+            //Console.WriteLine(this.Character + "|" + BoonEvents[740].Count);
+            //Console.Read();
         }
 
-        private void SetStateEvents(List<Event> events)
+        private void SetStateChangeEvents(List<Event> events)
         {
             foreach (Event e in events)
             {

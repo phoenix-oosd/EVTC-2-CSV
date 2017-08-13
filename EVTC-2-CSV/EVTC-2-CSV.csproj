@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Data\Boon\BoonStack\BoonStack.cs" />
+    <Compile Include="Model\Data\Boon\BoonStack.cs" />
     <Compile Include="Model\Data\Agent\Gadget.cs" />
     <Compile Include="Model\Data\Agent\IAgent.cs" />
     <Compile Include="Model\Data\Agent\NPC.cs" />
@@ -55,7 +55,7 @@
     <Compile Include="Model\Data\Event\StateChangeEvent.cs" />
     <Compile Include="Model\Data\Metadata\Metadata.cs" />
     <Compile Include="Model\Data\Skill\Skill.cs" />
-    <Compile Include="Model\Data\Boon\BoonStack\BoonStackDuration.cs" />
+    <Compile Include="Model\Data\Boon\BoonStackDuration.cs" />
     <Compile Include="Model\Data\Boon\Boon.cs" />
     <Compile Include="Model\Enums\Activation.cs" />
     <Compile Include="Model\Enums\BuffRemove.cs" />
@@ -67,7 +67,7 @@
     <Compile Include="Model\Enums\Result.cs" />
     <Compile Include="Model\Enums\StateChange.cs" />
     <Compile Include="Model\Extensions\BinaryReaderExtensions.cs" />
-    <Compile Include="Model\Data\Boon\BoonStack\BoonStackIntensity.cs" />
+    <Compile Include="Model\Data\Boon\BoonStackIntensity.cs" />
     <Compile Include="Model\Data\Skill\Interval.cs" />
     <Compile Include="Model\Data\Parser\Parser.cs" />
     <Compile Include="Model\Data\Parser\Converter.cs" />

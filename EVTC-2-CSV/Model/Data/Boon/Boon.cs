@@ -5,6 +5,7 @@ namespace EVTC_2_CSV.Model
     public class Boon
     {
         #region Static
+        public static readonly Boon Might = new Boon(740, 25, false);
         public static readonly Boon Quickness = new Boon(1187, 5, true);
         public static readonly Boon Fury = new Boon(725, 9, true);
         #endregion
@@ -35,13 +36,14 @@ namespace EVTC_2_CSV.Model
         {
             get
             {
+                yield return Might;
                 yield return Quickness;
                 yield return Fury;
             }
         }
         #endregion
 
-        //Might = 740,
+
         //Alacrity = 30328,
         //EmpowerAllies = 14222,
         //BannerOfStrength = 14417,
