@@ -2,7 +2,6 @@
 using EVTC_2_CSV.Model.Enums;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,26 +10,44 @@ namespace EVTC_2_CSV
 {
     public class Program
     {
+        #region Members
         private static string[] _logs;
         private static Parser _parser = new Parser();
+        #endregion
 
+        #region Main
         public static void Main(string[] args)
         {
             PromptBegin();
             if (LoadEVTC())
             {
-                if (!ConfigurationHasFields())
+                if (ConfigurationHasFields())
                 {
-                    Console.WriteLine("Configuration has no fields enabled..." + Environment.NewLine);
+                    string fName = "./" + (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + ".csv";
+                    using (StreamWriter f = new StreamWriter(fName))
+                    {
+                        if (Properties.Settings.Default.WriteHeader)
+                        {
+                            WriteCSVHeader(f);
+                        }
+                        List<string> err = WriteCSVRows(f);
+                        Console.WriteLine("CSV file written into " + fName + Environment.NewLine);
+                        if (err.Count > 0)
+                        {
+                            WriteErrors(err);
+                        }
+                    }
                 }
                 else
                 {
-                    WriteCSVRows();
+                    Console.WriteLine("Configuration has no fields enabled..." + Environment.NewLine);
                 }
             }
             PromptQuit();
         }
+        #endregion
 
+        #region Private Methods
         private static void PromptBegin()
         {
             Console.WriteLine("Press any key to continue...");
@@ -40,7 +57,7 @@ namespace EVTC_2_CSV
 
         private static bool LoadEVTC()
         {
-            _logs = Directory.GetFiles("./", "*.evtc*", SearchOption.AllDirectories);
+            _logs = Directory.EnumerateFiles("./", "*", SearchOption.AllDirectories).Where(f => f.EndsWith(".evtc") || f.EndsWith(".evtc.zip")).ToArray();
             if (_logs.Length > 0)
             {
                 return true;
@@ -54,9 +71,9 @@ namespace EVTC_2_CSV
 
         private static bool ConfigurationHasFields()
         {
-            foreach (string field in Enum.GetNames(typeof(Field)))
+            foreach (string e in Enum.GetNames(typeof(Field)))
             {
-                if (Properties.Settings.Default[field].ToString() == "True")
+                if ((bool)Properties.Settings.Default[e])
                 {
                     return true;
                 }
@@ -74,60 +91,50 @@ namespace EVTC_2_CSV
         private static void WriteCSVHeader(StreamWriter f)
         {
             Console.WriteLine("Writing header...");
-            StringBuilder header = new StringBuilder();
-            foreach (string field in Enum.GetNames(typeof(Field)))
+            StringBuilder sb = new StringBuilder();
+            foreach (string e in Enum.GetNames(typeof(Field)))
             {
-                if (Properties.Settings.Default[field].ToString() == "True")
+                if ((bool)Properties.Settings.Default[e])
                 {
-                    header.Append(field + ",");
+                    sb.Append(e + ",");
                 }
             }
-            header.Remove(header.Length - 1, 1);
-            f.WriteLine(header.ToString());
+            sb.Remove(sb.Length - 1, 1);
+            f.WriteLine(sb.ToString());
         }
 
-        private static void WriteCSVRows()
+        private static List<string> WriteCSVRows(StreamWriter f)
         {
-            string fileName = "./" + (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds + ".csv";
-            using (StreamWriter f = new StreamWriter(fileName))
+            List<string> err = new List<string>();
+            for (int i = 0; i < _logs.Length; i++)
             {
-                if (Properties.Settings.Default.WriteHeader)
+                Console.Write("\rParsing " + (i + 1) + " of " + _logs.Length + " logs...");
+                if (_parser.Parse(_logs[i]))
                 {
-                    WriteCSVHeader(f);
+                    f.Write(new Converter(_parser).ToCSV());
                 }
-                List<string> errors = new List<string>();
-                for (int i = 0; i < _logs.Length; i++)
+                else
                 {
-                    Console.Write("\rParsing " + (i + 1) + " of " + _logs.Length + " logs...");
-                    if (_parser.Parse(_logs[i]))
-                    {
-                        f.Write(new Converter(_parser).ToCSV());
-                    }
-                    else
-                    {
-                        errors.Add(_logs[i]);
-                    }
+                    err.Add(_logs[i]);
                 }
-                Console.WriteLine(Environment.NewLine);
-                Console.WriteLine("CSV file written into " + fileName + Environment.NewLine);
-                WriteErrors(errors);
+                //break;
             }
+            Console.WriteLine(Environment.NewLine);
+            return err;
         }
 
-        private static void WriteErrors(List<string> errors)
+        private static void WriteErrors(List<string> err)
         {
-            if (errors.Count > 0)
+            Console.WriteLine("Failed to parse " + err.Count + " file(s)...");
+            Console.WriteLine("Problem file paths written into error.log...");
+            using (StreamWriter f = new StreamWriter("errors.log"))
             {
-                Console.WriteLine("Failed to parse " + errors.Count + " file(s)...");
-                Console.WriteLine("Problem file paths written into error.log...");
-                using (StreamWriter ew = new StreamWriter("errors.log"))
+                foreach (string e in err)
                 {
-                    foreach (string e in errors)
-                    {
-                        ew.WriteLine(e);
-                    }
+                    f.WriteLine(e);
                 }
             }
         }
+        #endregion
     }
 }

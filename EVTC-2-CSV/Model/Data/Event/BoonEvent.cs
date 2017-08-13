@@ -1,10 +1,11 @@
 ﻿namespace EVTC_2_CSV.Model
 {
-    public class StateEvent
+    public class BoonEvent
     {
         #region Properties
+        public int SkillId { get; set; }
         public int Time { get; set; }
-        public StateChange State { get; set; }
+        public int Duration { get; set; }
         #endregion
     }
 }

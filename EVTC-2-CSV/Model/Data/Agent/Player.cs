@@ -18,8 +18,8 @@ namespace EVTC_2_CSV.Model
         public int Healing { get; set; }
         public int Condition { get; set; }
         public List<CombatEvent> DamageEvents { get; set; } = new List<CombatEvent>();
-        public List<BoonEvent> BoonEvents { get; set; } = new List<BoonEvent>();
-        public List<StateEvent> StateEvents { get; set; } = new List<StateEvent>();
+        public List<StateChangeEvent> StateEvents { get; set; } = new List<StateChangeEvent>();
+        public Dictionary<int, List<BoonEvent>> BoonEvents { get; set; } = new Dictionary<int, List<BoonEvent>>();
         #endregion
 
         #region Constructor
@@ -88,15 +88,19 @@ namespace EVTC_2_CSV.Model
 
         private void SetBoonEvents(List<Event> events)
         {
+            foreach (Boon b in Boon.Values)
+            {
+                BoonEvents.Add(b.SkillId, new List<BoonEvent>());
+            }
+
             foreach (Event e in events)
             {
-                if (e.DstInstid == Instid && Enum.IsDefined(typeof(Boon), e.SkillId))
+                if (e.DstInstid == Instid && BoonEvents.ContainsKey(e.SkillId))
                 {
-                    BoonEvents.Add(new BoonEvent()
+                    BoonEvents[e.SkillId].Add(new BoonEvent()
                     {
                         Time = e.Time,
-                        Duration = e.Value - e.OverstackValue,
-                        SkillId = e.SkillId
+                        Duration = e.Value
                     });
                 }
             }
@@ -108,10 +112,10 @@ namespace EVTC_2_CSV.Model
             {
                 if (e.StateChange != StateChange.None && e.SrcInstid == Instid)
                 {
-                    StateEvents.Add(new StateEvent()
+                    StateEvents.Add(new StateChangeEvent()
                     {
                         Time = e.Time,
-                        State = e.StateChange
+                        StateChange = e.StateChange
                     });
                 }
             }

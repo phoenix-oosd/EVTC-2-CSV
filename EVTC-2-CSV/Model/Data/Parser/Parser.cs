@@ -10,7 +10,7 @@ namespace EVTC_2_CSV.Model
     public class Parser
     {
         #region Members
-        private BinaryReader _reader;
+        private BinaryReader _br;
         #endregion
 
         #region Properties
@@ -29,17 +29,17 @@ namespace EVTC_2_CSV.Model
             {
                 if (Path.GetExtension(filePath) == ".evtc")
                 {
-                    _reader = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read));
+                    _br = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read));
                 }
                 else
                 {
-                    Stream stream = ZipFile.OpenRead(filePath).Entries.First().Open();
+                    Stream stream = ZipFile.OpenRead(filePath).Entries[0].Open();
                     MemoryStream memStream = new MemoryStream();
                     stream.CopyTo(memStream);
                     memStream.Position = 0;
-                    _reader = new BinaryReader(memStream);
+                    _br = new BinaryReader(memStream);
                 }
-                using (_reader)
+                using (_br)
                 {
                     Metadata = new Metadata();
                     Players = new List<Player>();
@@ -63,17 +63,17 @@ namespace EVTC_2_CSV.Model
         #region Private Methods
         private void ParseMetadata()
         {
-            Metadata.ARCVersion = _reader.ReadUTF8(12); // 12 bytes: build version 
-            Metadata.TargetSpeciesId = _reader.Skip(1).ReadUInt16(); // 2 bytes: instid
+            Metadata.ARCVersion = _br.ReadUTF8(12); // 12 bytes: build version 
+            Metadata.TargetSpeciesId = _br.Skip(1).ReadUInt16(); // 2 bytes: instid
         }
 
         private void ParseAgents()
         {
             // 4 bytes: agent count
-            int agentCount = _reader.Skip(1).ReadInt32();
+            int ac = _br.Skip(1).ReadInt32();
 
             // 96 bytes: each agent
-            for (int i = 0; i < agentCount; i++)
+            for (int i = 0; i < ac; i++)
             {
                 // add agent
                 AddAgent();
@@ -83,60 +83,60 @@ namespace EVTC_2_CSV.Model
         private void ParseSkills()
         {
             // 4 bytes: skill count
-            int skillCount = _reader.ReadInt32();
+            int sc = _br.ReadInt32();
 
             // 68 bytes: each skill
-            for (int i = 0; i < skillCount; i++)
+            for (int i = 0; i < sc; i++)
             {
                 Skills.Add(new Skill()
                 {
-                    Id = _reader.ReadInt32(), // 4 bytes: id
-                    Name = _reader.ReadUTF8(64) // 64 bytes: name
+                    Id = _br.ReadInt32(), // 4 bytes: id
+                    Name = _br.ReadUTF8(64) // 64 bytes: name
                 });
             }
         }
 
         private void ParseEvents()
         {
-            // Read until EOF
-            while (_reader.BaseStream.Position != _reader.BaseStream.Length)
+            // Until EOF
+            while (_br.BaseStream.Position != _br.BaseStream.Length)
             {
                 Event combat = new Event()
                 {
-                    Time = (int)_reader.ReadUInt64(), // 8 bytes: time
-                    SrcAgent = _reader.ReadUInt64Hex(), // 8 bytes: src agent
-                    DstAgent = _reader.ReadUInt64Hex(),  // 8 bytes: dst agent
-                    Value = _reader.ReadInt32(), // 4 bytes: value
-                    BuffDmg = _reader.ReadInt32(), // 4 bytes: buff damage
-                    OverstackValue = _reader.ReadUInt16(), // 2 bytes: overstack value
-                    SkillId = _reader.ReadUInt16(), // 2 bytes: skill id
-                    SrcInstid = _reader.ReadUInt16(), // 2 bytes: src instid
-                    DstInstid = _reader.ReadUInt16(), // 2 bytes: dst instid
-                    SrcMasterInstid = _reader.ReadUInt16(), // 2 bytes: src master instid
-                    IFF = (IFF)_reader.Skip(9).Read(), // 1 byte: IFF
-                    IsBuff = _reader.ReadBoolean(), // 1 byte: IsBuff
-                    Result = (Result)_reader.Read(), // 1 byte: Result
-                    Activation = (Activation)_reader.Read(), // 1 byte: Activation
-                    BuffRemove = (BuffRemove)_reader.Read(), // 1 byte: BuffRemove
-                    IsNinety = _reader.ReadBoolean(), // 1 byte: IsNinety
-                    IsFifty = _reader.ReadBoolean(), // 1 byte: IsFifty
-                    IsMoving = _reader.ReadBoolean(), // 1 byte: IsMoving
-                    StateChange = (StateChange)_reader.Read(), // 1 byte: StateChange
-                    IsFlanking = _reader.ReadBoolean(), // 1 byte: IsFlanking
-                    IsShield = _reader.ReadBoolean() // 1 byte: IsShield
+                    Time = (int)_br.ReadUInt64(), // 8 bytes: Time
+                    SrcAgent = _br.ReadUInt64Hex(), // 8 bytes: Src Agent
+                    DstAgent = _br.ReadUInt64Hex(),  // 8 bytes: Dst Agent
+                    Value = _br.ReadInt32(), // 4 bytes: Value
+                    BuffDmg = _br.ReadInt32(), // 4 bytes: Buff Damage
+                    OverstackValue = _br.ReadUInt16(), // 2 bytes: Overstack Value
+                    SkillId = _br.ReadUInt16(), // 2 bytes: Skill Id
+                    SrcInstid = _br.ReadUInt16(), // 2 bytes: Src Instid
+                    DstInstid = _br.ReadUInt16(), // 2 bytes: Dst Instid
+                    SrcMasterInstid = _br.ReadUInt16(), // 2 bytes: Src Master Instid
+                    IFF = (IFF)_br.Skip(9).Read(), // 1 byte: IFF
+                    IsBuff = _br.ReadBoolean(), // 1 byte: IsBuff
+                    Result = (Result)_br.Read(), // 1 byte: Result
+                    Activation = (Activation)_br.Read(), // 1 byte: Activation
+                    BuffRemove = (BuffRemove)_br.Read(), // 1 byte: BuffRemove
+                    IsNinety = _br.ReadBoolean(), // 1 byte: IsNinety
+                    IsFifty = _br.ReadBoolean(), // 1 byte: IsFifty
+                    IsMoving = _br.ReadBoolean(), // 1 byte: IsMoving
+                    StateChange = (StateChange)_br.Read(), // 1 byte: StateChange
+                    IsFlanking = _br.ReadBoolean(), // 1 byte: IsFlanking
+                    IsShield = _br.ReadBoolean() // 1 byte: IsShield
                 };
 
                 // Add Combat
-                _reader.Skip(2);
+                _br.Skip(2);
                 Events.Add(combat);
             }
         }
 
-        private Profession ParseProfession(int profLower, int profUpper, int isElite)
+        private Profession ParseProfession(int pLower, int pUpper, int isElite)
         {
             if (isElite == -1)
             {
-                if (profUpper == 65535)
+                if (pUpper == 65535)
                 {
                     return Profession.Gadget;
                 }
@@ -147,30 +147,30 @@ namespace EVTC_2_CSV.Model
             }
             else
             {
-                return (Profession)profLower + (9 * isElite);
+                return (Profession)pLower + (9 * isElite);
             }
         }
 
         private void AddAgent()
         {
-            string address = _reader.ReadUInt64Hex(); // 8 bytes: address
-            int profLower = BitConverter.ToUInt16(_reader.ReadBytes(2), 0); // 2 bytes: prof_lower
-            int profUpper = BitConverter.ToUInt16(_reader.ReadBytes(2), 0); // 2 bytes: prof_upper
-            int isElite = _reader.ReadInt32(); // 4 bytes: is_elite
-            int toughness = _reader.ReadInt32();  // 4 bytes: toughness
-            int healing = _reader.ReadInt32();  // 4 bytes: healing
-            int condition = _reader.ReadInt32();  // 4 bytes: condition
-            string name = _reader.ReadUTF8(68); // 68 bytes: name
+            string address = _br.ReadUInt64Hex(); // 8 bytes: Address
+            int pLower = BitConverter.ToUInt16(_br.ReadBytes(2), 0); // 2 bytes: Prof (lower bytes)
+            int pUpper = BitConverter.ToUInt16(_br.ReadBytes(2), 0); // 2 bytes: prof (upper bytes)
+            int isElite = _br.ReadInt32(); // 4 bytes: IsElite
+            int toughness = _br.ReadInt32();  // 4 bytes: Toughness
+            int healing = _br.ReadInt32();  // 4 bytes: Healing
+            int condition = _br.ReadInt32();  // 4 bytes: Condition
+            string name = _br.ReadUTF8(68); // 68 bytes: Name
 
             // Add Agent by Type
-            Profession profession = ParseProfession(profLower, profUpper, isElite);
+            Profession profession = ParseProfession(pLower, pUpper, isElite);
             switch (profession)
             {
                 case Profession.Gadget:
                     Gadgets.Add(new Gadget()
                     {
                         Address = address,
-                        PseudoId = profLower,
+                        PseudoId = pLower,
                         Name = name
                     });
                     return;
@@ -178,7 +178,7 @@ namespace EVTC_2_CSV.Model
                     NPCs.Add(new NPC()
                     {
                         Address = address,
-                        SpeciesId = profLower,
+                        SpeciesId = pLower,
                         Toughness = toughness,
                         Healing = healing,
                         Condition = condition,
@@ -200,10 +200,6 @@ namespace EVTC_2_CSV.Model
 
         private void FillMissingData()
         {
-            // Update Times
-            int timeStart = Events.First().Time;
-            Events.ForEach(e => e.Time -= timeStart);
-
             // Update Instid
             foreach (Player p in Players)
             {
@@ -236,68 +232,78 @@ namespace EVTC_2_CSV.Model
             }
 
             // Update Metadata
-            IEnumerable<Event> stateChanges = Events.Where(e => e.StateChange != StateChange.None);
-            foreach (Event e in stateChanges)
+            IEnumerable<Event> sc = Events.Where(e => e.StateChange != StateChange.None);
+            foreach (Event e in sc)
             {
-                StateChange stateChange = e.StateChange;
-                if (stateChange == StateChange.LogStart)
+                StateChange s = e.StateChange;
+                if (s == StateChange.LogStart)
                 {
                     Metadata.LogStart = DateTimeOffset.FromUnixTimeSeconds(e.Value).DateTime;
                 }
-                else if (stateChange == StateChange.LogEnd)
+                else if (s == StateChange.LogEnd)
                 {
                     Metadata.LogEnd = DateTimeOffset.FromUnixTimeSeconds(e.Value).DateTime;
                 }
-                else if (stateChange == StateChange.PointOfView)
+                else if (s == StateChange.PointOfView)
                 {
                     Metadata.PointOfView = (Players.Find(p => p.Address == e.SrcAgent) != null) ? Players.Find(p => p.Address == e.SrcAgent).Account : ":?.????";
                 }
-                else if (stateChange == StateChange.Language)
+                else if (s == StateChange.Language)
                 {
                     Metadata.Language = (Language)e.Value;
                 }
-                else if (stateChange == StateChange.GWBuild)
+                else if (s == StateChange.GWBuild)
                 {
                     Metadata.GWBuild = int.Parse(e.SrcAgent, NumberStyles.HexNumber);
                 }
-                else if (stateChange == StateChange.ShardID)
+                else if (s == StateChange.ShardID)
                 {
                     Metadata.ShardID = int.Parse(e.SrcAgent, NumberStyles.HexNumber);
                 }
             }
 
+            // Time normalization
+            int ts = Events[0].Time;
+            Events.ForEach(e => e.Time -= ts);
+
             // Target
-            NPC target = NPCs.Find(n => n.SpeciesId == Metadata.TargetSpeciesId);
-            if (target.SpeciesId == 16246)
+            NPC tg = NPCs.Find(n => n.SpeciesId == Metadata.TargetSpeciesId);
+
+            // Adjust instids of second half of Xera
+            if (tg.SpeciesId == 16246)
             {
-                NPC xeraSecond = NPCs.Find(n => n.SpeciesId == 16286);
-                if (xeraSecond != null)
+                NPC shx = NPCs.Find(n => n.SpeciesId == 16286);
+                if (shx != null)
                 {
                     foreach (Event e in Events)
                     {
-                        if (e.SrcInstid == xeraSecond.Instid)
+                        if (e.SrcInstid == shx.Instid)
                         {
-                            e.SrcInstid = target.Instid;
+                            e.SrcInstid = tg.Instid;
                         }
-                        else if (e.DstInstid == xeraSecond.Instid)
+                        else if (e.DstInstid == shx.Instid)
                         {
-                            e.DstInstid = target.Instid;
+                            e.DstInstid = tg.Instid;
                         }
-                        else if (e.SrcMasterInstid == xeraSecond.Instid)
+                        else if (e.SrcMasterInstid == shx.Instid)
                         {
-                            e.SrcMasterInstid = target.Instid;
+                            e.SrcMasterInstid = tg.Instid;
                         }
                     }
                 }
             }
-            Event targetDeath = Events.Find(e => e.StateChange == StateChange.ChangeDead && e.SrcInstid == target.Instid);
-            if (targetDeath != null) {
-                target.LastAware = targetDeath.Time;
-                Events = Events.TakeWhile(e => !(e.StateChange == StateChange.ChangeDead && e.SrcInstid == target.Instid)).ToList();
+
+            // Set First/Last Aware for Target
+            tg.FirstAware = Events.Where(e => e.SrcInstid == tg.Instid).First().Time;
+            Event tde = Events.Find(e => e.StateChange == StateChange.ChangeDead && e.SrcInstid == tg.Instid);
+            if (tde != null)
+            {
+                tg.LastAware = tde.Time;
+                Events = Events.TakeWhile(e => !(e.StateChange == StateChange.ChangeDead && e.SrcInstid == tg.Instid)).ToList(); // Trim Events After Death
             }
             else
             {
-                target.LastAware = Events.Where(e => e.SrcInstid == target.Instid).Last().Time;
+                tg.LastAware = Events.Where(e => e.SrcInstid == tg.Instid).Last().Time;
             }
         }
         #endregion
