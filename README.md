@@ -19,21 +19,43 @@
 |Build     |:INTEGER|Guild Wars 2 [build](https://api.guildwars2.com/v2/build) to identify game patch
 |Species   |:INTEGER|Species ID of the target NPC e.g. 15429 = Gorseval
 |Target    |:STRING |Name of the target NPC
-|Time      |:INTEGER|Duration of the encounter in fractional seconds
-|Account   |:STRING |Display name and account number e.g :Account:0000
+|Time      |:INTEGER|Duration of the encounter
+|Account   |:STRING |Display name and account number
 |Character |:STRING |Character name
-|Profession|:STRING |Character profession (elite specialization overrides base profession)
-|Gear      |:STRING |Main attribute of character's gear e.g. "Power", "Condition"
-|DPS       |:FLOAT  |Damage per second to the target
-|Critical  |:FLOAT  |Percentage of physical hits where the character lands a critical hit
-|Scholar   |:FLOAT  |Percentage of physical hits where the character's health is above 90%
-|Flank     |:FLOAT  |Percentage of physical hits where the character is flanking
-|Moving    |:FLOAT  |The percentage of physical hits where the character is moving (e.g. Seaweed Salad)
-|Dodge     |:INTEGER|Number of times the character dodges
-|Swap      |:INTEGER|Number of times the character swaps weapons (includes kits,bundles,attuning etc.)
-|Resurrect |:INTEGER|Number of resurrection pulses when picking up a downed ally
-|Downed    |:INTEGER|Number of times the character downs
-|Died      |:BOOLEAN|Whether the character died during the encounter
+|[Boons](#boons)   |:FLOAT  | Rates and stacks of various boons
+|Profession|:STRING |Profession / elite specialization
+|Gear      |:STRING |Main attribute of gear ("P" = Power, "C" = Condition)
+|DPS       |:FLOAT  |Total target DPS
+|PDPS      |:FLOAT  |Power target DPS
+|CDPS      |:FLOAT  |Condition target DPS
+|Critical  |:FLOAT  |Critical hit rate
+|Scholar   |:FLOAT  |Health above 90% hit rate
+|Flank     |:FLOAT  |Flanking hit rate
+|Moving    |:FLOAT  |Moving hit rate (e.g. Seaweed Salad)
+|Dodge     |:INTEGER|Dodge count
+|Swap      |:INTEGER|Weapon swap count
+|Resurrect |:INTEGER|Resurrection pulse count
+|Downed    |:INTEGER|Downed count
+|Died      |:BOOLEAN|If died during encounter
+
+### BOONS
+|Name                 |
+|---------------------|
+|Might                |
+|Fury                 |
+|Quickness            |
+|Alacrity             |
+|EmpowerAllies        |
+|BannerOfStrength     |
+|BannerOfDiscipline   |
+|Spotter              |
+|SunSpirit            |
+|FrostSpirit          |
+|GlyphOfEmpowerment   |
+|GraceOfTheLand       |
+|PinpointDistribution |
+|AssassinsPresence    |
+|NaturalisticResonance|
 
 ### CONFIG INFO
 * Header fields are written in the order of the table above

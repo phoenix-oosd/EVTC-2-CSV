@@ -102,8 +102,14 @@ namespace EVTC_2_CSV.Model
             {
                 sb.Append(Math.Round(p.DamageEvents.Sum(e => e.Damage) / (_time / 1000.0), 2) + ","); // DPS
             }
-            // Power
-            // Condi
+            if (Properties.Settings.Default.PDPS)
+            {
+                sb.Append(Math.Round(p.DamageEvents.Where(e => !e.IsBuff).Sum(e => e.Damage) / (_time / 1000.0), 2) + ","); // DPS
+            }
+            if (Properties.Settings.Default.CDPS)
+            {
+                sb.Append(Math.Round(p.DamageEvents.Where(e => e.IsBuff).Sum(e => e.Damage) / (_time / 1000.0), 2) + ","); // DPS
+            }
             // Damage Taken
         }
 

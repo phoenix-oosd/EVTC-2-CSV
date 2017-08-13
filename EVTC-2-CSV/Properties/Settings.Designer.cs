@@ -170,6 +170,210 @@ namespace EVTC_2_CSV.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PDPS {
+            get {
+                return ((bool)(this["PDPS"]));
+            }
+            set {
+                this["PDPS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CDPS {
+            get {
+                return ((bool)(this["CDPS"]));
+            }
+            set {
+                this["CDPS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Might {
+            get {
+                return ((bool)(this["Might"]));
+            }
+            set {
+                this["Might"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Fury {
+            get {
+                return ((bool)(this["Fury"]));
+            }
+            set {
+                this["Fury"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Quickness {
+            get {
+                return ((bool)(this["Quickness"]));
+            }
+            set {
+                this["Quickness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Alacrity {
+            get {
+                return ((bool)(this["Alacrity"]));
+            }
+            set {
+                this["Alacrity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EmpowerAllies {
+            get {
+                return ((bool)(this["EmpowerAllies"]));
+            }
+            set {
+                this["EmpowerAllies"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool BannerOfStrength {
+            get {
+                return ((bool)(this["BannerOfStrength"]));
+            }
+            set {
+                this["BannerOfStrength"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool BannerOfDiscipline {
+            get {
+                return ((bool)(this["BannerOfDiscipline"]));
+            }
+            set {
+                this["BannerOfDiscipline"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Spotter {
+            get {
+                return ((bool)(this["Spotter"]));
+            }
+            set {
+                this["Spotter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SunSpirit {
+            get {
+                return ((bool)(this["SunSpirit"]));
+            }
+            set {
+                this["SunSpirit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FrostSpirit {
+            get {
+                return ((bool)(this["FrostSpirit"]));
+            }
+            set {
+                this["FrostSpirit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GlyphOfEmpowerment {
+            get {
+                return ((bool)(this["GlyphOfEmpowerment"]));
+            }
+            set {
+                this["GlyphOfEmpowerment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GraceOfTheLand {
+            get {
+                return ((bool)(this["GraceOfTheLand"]));
+            }
+            set {
+                this["GraceOfTheLand"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool PinpointDistribution {
+            get {
+                return ((bool)(this["PinpointDistribution"]));
+            }
+            set {
+                this["PinpointDistribution"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AssassinsPresence {
+            get {
+                return ((bool)(this["AssassinsPresence"]));
+            }
+            set {
+                this["AssassinsPresence"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool NaturalisticResonance {
+            get {
+                return ((bool)(this["NaturalisticResonance"]));
+            }
+            set {
+                this["NaturalisticResonance"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool Critical {
             get {
                 return ((bool)(this["Critical"]));
